@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kitchen Timer</string>
+    <string name="text0">0</string>
+    <string name="recent0">Recent0</string>
+    <string name="recent1">Recent1</string>
+    <string name="recent2">Recent2</string>
+</resources>
