@@ -95,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickPlus(View v) {
         seconds += 60;
-        displayTime();
         flag_modified = true;
+        displayTime();
     };
 
     public void onClickMinus(View v) {
         seconds = Math.max(0, seconds - 60);
-        displayTime();
         flag_modified = true;
+        displayTime();
     };
 
     public void onReset(View v) {
