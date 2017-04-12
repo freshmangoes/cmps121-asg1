@@ -23,16 +23,14 @@ public class MainActivity extends AppCompatActivity {
     // Temp variables to store previous times as variables
     public int tempm = 0;
     public int temps = 0;
-
     public int tempm00 = 0;
     public int temps00 = 0;
-
-    public int tempm0 = 0;
-    public int temps0 = 0;
-    public int tempm1 = 0;
-    public int temps1 = 0;
-    public int tempm2 = 0;
-    public int temps2 = 0;
+    public int recent_min_0 = 0;
+    public int recent_sec_0 = 0;
+    public int recent_min_1 = 0;
+    public int recent_sec_1 = 0;
+    public int recent_min_2 = 0;
+    public int recent_sec_2 = 0;
 
     // Countdown timer.
     private CountDownTimer timer = null;
@@ -62,36 +60,36 @@ public class MainActivity extends AppCompatActivity {
         Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
         Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
         Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
-        r0.setText(String.format("%d:%02d", tempm0, temps0));
+        r0.setText(String.format("%d:%02d", recent_min_0, recent_sec_0));
 
+        // Check to make sure + or - was hit
         if(flag_modified){
-
             // If the temp variable for the first recent time already has something stored
-            if((tempm != tempm0) && (temps != temps0)){
+            if((tempm != recent_min_0) && (temps != recent_sec_0)){
                 // Set it to the second recent time
-                tempm1 = tempm;
-                temps1 = temps;
-                r1.setText(String.format("%d:%02d", tempm1, temps1));
+                recent_min_1 = tempm;
+                recent_sec_1 = temps;
+                r1.setText(String.format("%d:%02d", recent_min_1, recent_sec_1));
                 // Update the temp variable for the first recent time
-                tempm = tempm0;
-                temps = temps0;
+                tempm = recent_min_0;
+                temps = recent_sec_0;
                 // If the temp variable for the second recent time already has something stored
-                if((tempm00 != tempm1) && (temps00 != temps1)){
+                if((tempm00 != recent_min_1) && (temps00 != recent_sec_1)){
                     // Set it to the third recent time
-                    tempm2 = tempm00;
-                    temps2 = temps00;
-                    r2.setText(String.format("%d:%02d", tempm2, temps2));
+                    recent_min_2 = tempm00;
+                    recent_sec_2 = temps00;
+                    r2.setText(String.format("%d:%02d", recent_min_2, recent_sec_2));
                     // Update the temp variable for the second recent time
-                    tempm00 = tempm1;
-                    temps00 = temps1;
+                    tempm00 = recent_min_1;
+                    temps00 = recent_sec_1;
                 }
                 // Initial set for the 2nd recent time
-                tempm00 = tempm1;
-                temps00 = temps1;
+                tempm00 = recent_min_1;
+                temps00 = recent_sec_1;
             }
             // Initial set for the first recent time
-            tempm = tempm0;
-            temps = temps0;
+            tempm = recent_min_0;
+            temps = recent_sec_0;
         }
     }
 
@@ -165,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
         //storing the previous time in temp variables
         if(flag_modified){
-            tempm0 = m;
-            temps0 = s;
+            recent_min_0 = m;
+            recent_sec_0 = s;
         }
 
         // Manages the buttons.
