@@ -18,8 +18,20 @@ public class MainActivity extends AppCompatActivity {
     // Counter for the number of seconds.
     private int seconds = 0;
 
-    private boolean flag_modified = false;
-    private boolean flag_stopped = false;
+    public boolean flag_modified = false;
+    public boolean flag_stopped = false;
+
+    public int m0 = 0;
+    public int m1 = 0;
+    public int m2 = 0;
+
+    public int s0 = 0;
+    public int s1 = 0;
+    public int s2 = 0;
+
+    public String temp0 = String.format("%d:%02d", m0, s0);
+    public String temp1 = String.format("%d:%02d", m0, s0);
+    public String temp2 = String.format("%d:%02d", m0, s0);
 
     // Countdown timer.
     private CountDownTimer timer = null;
@@ -38,9 +50,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayTime();
+        flag_modified = false;
     }
 
     public void updateButtonTimes(){
+        //My Buttons
+        Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
+        Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
+        Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
+
+        //my buttons
+        TextView r0 = (TextView) findViewById(R.id.time_butt_0);
+        TextView r1 = (TextView) findViewById(R.id.time_butt_1);
+        TextView r2 = (TextView) findViewById(R.id.time_butt_2);
+
+        //my buttons
+        r0.setText(temp0);
+        r1.setText(temp1);
+        r2.setText(temp2);
+
 
     }
 
@@ -86,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
             };
             timer.start();
             if ((flag_modified = true) && (flag_stopped = true)){
-                updateButtonTimes();
+
             }
             flag_modified = false;
+            updateButtonTimes();
         }
     }
 
@@ -108,16 +137,19 @@ public class MainActivity extends AppCompatActivity {
     // Updates the time display.
     private void displayTime() {
         Log.d(LOG_TAG, "Displaying time " + seconds);
+
         TextView v = (TextView) findViewById(R.id.display);
+
         int m = seconds / 60;
         int s = seconds % 60;
+
         v.setText(String.format("%d:%02d", m, s));
+
         // Manages the buttons.
         Button stopButton = (Button) findViewById(R.id.button_stop);
-        Button startButton = (Button) findViewById(R.id.button_start);
+        Button startButton = (Button)findViewById(R.id.button_start);
+
         startButton.setEnabled(timer == null && seconds > 0);
         stopButton.setEnabled(timer != null && seconds > 0);
     }
-
-
 }
