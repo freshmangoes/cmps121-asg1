@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer timer = null;
 
     // One second.  We use Mickey Mouse time.
-    private static final int ONE_SECOND_IN_MILLIS = 100;
+    private static final int ONE_SECOND_IN_MILLIS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         TextView r1 = (TextView) findViewById(R.id.time_butt_1);
         TextView r2 = (TextView) findViewById(R.id.time_butt_2);
         //My Buttons
-        Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
-        Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
-        Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
+//        Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
+//        Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
+//        Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
         r0.setText(String.format("%d:%02d", recent_min_0, recent_sec_0));
 
         // Check to make sure + or - was hit
@@ -93,6 +93,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // There was probably a more efficient way to do this than make function
+    // for each recent button, but I am too inexperienced in Android development T_T
+    public void onClickRecent0(View v){
+        seconds = (recent_min_0*60) + (recent_sec_0);
+        displayTime();
+        startTimer();
+    }
+
+    public void onClickRecent1(View v){
+        seconds = (recent_min_1*60) + (recent_sec_1);
+        displayTime();
+        startTimer();
+    }
+
+    public void onClickRecent2(View v){
+        seconds = (recent_min_2*60) + (recent_sec_2);
+        displayTime();
+        startTimer();
+    }
+
     public void onClickPlus(View v) {
         seconds += 60;
         flag_modified = true;
@@ -111,10 +131,9 @@ public class MainActivity extends AppCompatActivity {
         displayTime();
     }
 
-    public void onClickStart(View v) {
-        if (seconds == 0) {
-            cancelTimer();
-        }
+    // Took Professor's suggestion and moved this section to a helper function
+    // so I don't have to call the entirety of onClickStart
+    public void startTimer(){
         if (timer == null) {
             // We create a new timer.
             timer = new CountDownTimer(seconds * ONE_SECOND_IN_MILLIS, ONE_SECOND_IN_MILLIS) {
@@ -133,8 +152,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             timer.start();
-
         }
+    }
+
+    public void onClickStart(View v) {
+        if (seconds == 0) {
+            cancelTimer();
+        }
+        startTimer();
         updateButtonTimes();
         flag_modified = false;
     }
