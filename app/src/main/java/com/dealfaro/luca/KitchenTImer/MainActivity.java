@@ -21,17 +21,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean flag_modified = false;
     public boolean flag_stopped = false;
 
-    public int m0 = 0;
-    public int m1 = 0;
-    public int m2 = 0;
-
-    public int s0 = 0;
-    public int s1 = 0;
-    public int s2 = 0;
-
-    public String temp0 = String.format("%d:%02d", m0, s0);
-    public String temp1 = String.format("%d:%02d", m0, s0);
-    public String temp2 = String.format("%d:%02d", m0, s0);
+    // Temp variables to store previous times as variables
+    public int tempm = 0;
+    public int temps = 0;
 
     // Countdown timer.
     private CountDownTimer timer = null;
@@ -54,21 +46,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateButtonTimes(){
-        //My Buttons
-        Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
-        Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
-        Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
+
 
         //my buttons
         TextView r0 = (TextView) findViewById(R.id.time_butt_0);
         TextView r1 = (TextView) findViewById(R.id.time_butt_1);
         TextView r2 = (TextView) findViewById(R.id.time_butt_2);
 
-        //my buttons
-        r0.setText(temp0);
-        r1.setText(temp1);
-        r2.setText(temp2);
+        //My Buttons
+        Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
+        Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
+        Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
 
+        r0.setText(String.format("%d:%02d", tempm, temps));
 
     }
 
@@ -142,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
         int m = seconds / 60;
         int s = seconds % 60;
+
+        //storing the previous time in temp variables
+        tempm = m;
+        temps = s;
 
         v.setText(String.format("%d:%02d", m, s));
 
