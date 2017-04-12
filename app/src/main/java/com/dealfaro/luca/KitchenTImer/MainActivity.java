@@ -22,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean flag_stopped = false;
 
     // Temp variables to store previous times as variables
-    public int tempm = 0;
-    public int temps = 0;
+    public int tempm0 = 0;
+    public int temps0 = 0;
+    public int tempm1 = 0;
+    public int temps1 = 0;
+    public int tempm2 = 0;
+    public int temps2 = 0;
 
     // Countdown timer.
     private CountDownTimer timer = null;
@@ -42,11 +46,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayTime();
-        flag_modified = false;
     }
 
     public void updateButtonTimes(){
-
 
         //my buttons
         TextView r0 = (TextView) findViewById(R.id.time_butt_0);
@@ -58,25 +60,24 @@ public class MainActivity extends AppCompatActivity {
         Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
         Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
 
-        r0.setText(String.format("%d:%02d", tempm, temps));
+        r0.setText(String.format("%d:%02d", tempm0, temps0));
+        r1.setText(String.format("%d:%02d", tempm1, temps1));
+
 
     }
 
     public void onClickPlus(View v) {
         seconds += 60;
-        flag_modified = true;
         displayTime();
     };
 
     public void onClickMinus(View v) {
         seconds = Math.max(0, seconds - 60);
-        flag_modified = true;
         displayTime();
     };
 
     public void onReset(View v) {
         seconds = 0;
-        flag_modified = true;
         cancelTimer();
         displayTime();
     }
@@ -103,17 +104,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             timer.start();
-            if ((flag_modified = true) && (flag_stopped = true)){
-
-            }
-            flag_modified = false;
             updateButtonTimes();
+
         }
     }
 
     public void onClickStop(View v) {
         cancelTimer();
-        flag_stopped = true;
         displayTime();
     }
 
@@ -129,15 +126,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Displaying time " + seconds);
 
         TextView v = (TextView) findViewById(R.id.display);
-
         int m = seconds / 60;
         int s = seconds % 60;
+        v.setText(String.format("%d:%02d", m, s));
 
         //storing the previous time in temp variables
-        tempm = m;
-        temps = s;
-
-        v.setText(String.format("%d:%02d", m, s));
+        tempm0 = m;
+        temps0 = s;
 
         // Manages the buttons.
         Button stopButton = (Button) findViewById(R.id.button_stop);
