@@ -19,9 +19,14 @@ public class MainActivity extends AppCompatActivity {
     private int seconds = 0;
 
     public boolean flag_modified = false;
-    public boolean flag_stopped = false;
 
     // Temp variables to store previous times as variables
+    public int tempm = 0;
+    public int temps = 0;
+
+    public int tempm00 = 0;
+    public int temps00 = 0;
+
     public int tempm0 = 0;
     public int temps0 = 0;
     public int tempm1 = 0;
@@ -49,31 +54,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateButtonTimes(){
-
         //my buttons
         TextView r0 = (TextView) findViewById(R.id.time_butt_0);
         TextView r1 = (TextView) findViewById(R.id.time_butt_1);
         TextView r2 = (TextView) findViewById(R.id.time_butt_2);
-
         //My Buttons
         Button recentButton0 = (Button) findViewById(R.id.time_butt_0);
         Button recentButton1 = (Button) findViewById(R.id.time_butt_1);
         Button recentButton2 = (Button) findViewById(R.id.time_butt_2);
-
         r0.setText(String.format("%d:%02d", tempm0, temps0));
-        r1.setText(String.format("%d:%02d", tempm1, temps1));
 
+        if(flag_modified){
 
+            // If the temp variable for the first recent time already has something stored
+            if((tempm != tempm0) && (temps != temps0)){
+                // Set it to the second recent time
+                tempm1 = tempm;
+                temps1 = temps;
+                r1.setText(String.format("%d:%02d", tempm1, temps1));
+                // Update the temp variable for the first recent time
+                tempm = tempm0;
+                temps = temps0;
+                // If the temp variable for the second recent time already has something stored
+                if((tempm00 != tempm1) && (temps00 != temps1)){
+                    // Set it to the third recent time
+                    tempm2 = tempm00;
+                    temps2 = temps00;
+                    r2.setText(String.format("%d:%02d", tempm2, temps2));
+                    // Update the temp variable for the second recent time
+                    tempm00 = tempm1;
+                    temps00 = temps1;
+                }
+                // Initial set for the 2nd recent time
+                tempm00 = tempm1;
+                temps00 = temps1;
+            }
+            // Initial set for the first recent time
+            tempm = tempm0;
+            temps = temps0;
+        }
     }
 
     public void onClickPlus(View v) {
         seconds += 60;
         displayTime();
+        flag_modified = true;
     };
 
     public void onClickMinus(View v) {
         seconds = Math.max(0, seconds - 60);
         displayTime();
+        flag_modified = true;
     };
 
     public void onReset(View v) {
@@ -104,9 +135,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             timer.start();
-            updateButtonTimes();
 
         }
+        updateButtonTimes();
+        flag_modified = false;
     }
 
     public void onClickStop(View v) {
@@ -124,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     // Updates the time display.
     private void displayTime() {
         Log.d(LOG_TAG, "Displaying time " + seconds);
+        Log.d(LOG_TAG, "Modified: " + flag_modified);
 
         TextView v = (TextView) findViewById(R.id.display);
         int m = seconds / 60;
@@ -131,8 +164,10 @@ public class MainActivity extends AppCompatActivity {
         v.setText(String.format("%d:%02d", m, s));
 
         //storing the previous time in temp variables
-        tempm0 = m;
-        temps0 = s;
+        if(flag_modified){
+            tempm0 = m;
+            temps0 = s;
+        }
 
         // Manages the buttons.
         Button stopButton = (Button) findViewById(R.id.button_stop);
