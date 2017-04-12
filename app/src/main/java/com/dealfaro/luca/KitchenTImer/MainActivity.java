@@ -1,6 +1,3 @@
-// Kyle Cilia
-// CMPS121 Assignment 1
-
 package com.dealfaro.luca.KitchenTImer;
 
 import android.os.CountDownTimer;
